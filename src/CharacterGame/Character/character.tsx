@@ -5,8 +5,10 @@ export const Character: FC = (): ReactElement => {
     ctx: CanvasRenderingContext2D;
     squerSize: number;
     margin: number;
+    jumpBool: boolean;
     // 클래스 생성시 초기화
     constructor() {
+      this.jumpBool = false;
       this.squerSize = 5;
       this.margin = 100;
     }
@@ -15,14 +17,17 @@ export const Character: FC = (): ReactElement => {
   const canvas = useRef();
   const cv: HTMLCanvasElement = canvas.current;
   const [load, setload] = useState<boolean>(false);
+  const [jumpHeight, setJumpHeight] = useState<number>(15);
+  const [jumpBool,setJumpBool] = useState<boolean>(false);
 
   /* 라인 그리기 */
   function Line(x: number, y: number, cnt: number) {
     for (let i = 0; i < cnt; i++) {
       if (cv !== undefined) {
         c.ctx = cv.getContext("2d");
+        c.ctx.fillStyle = 'gray';
         c.ctx.clearRect(
-          c.margin + c.squerSize * 4,
+          c.margin + c.squerSize * 3,
           c.squerSize * 4,
           c.squerSize,
           c.squerSize
@@ -35,7 +40,7 @@ export const Character: FC = (): ReactElement => {
   /* 몸통 그려주고 */
   function BodyDraw() {
     const size = c.squerSize;
-    if(c.ctx !== undefined) c.ctx.clearRect(0, 0, cv.width, cv.height);
+    if (c.ctx !== undefined) c.ctx.clearRect(0, 0, cv.width, cv.height);
     for (let j = 3; j < 8; j++) Line(3, size * j, size * 8);
     Line(10, size * 2, size * 5);
     Line(3, size * 8, size * 4);
@@ -44,7 +49,7 @@ export const Character: FC = (): ReactElement => {
     Line(-3, size * 11, size * 4);
     Line(-8, size * 12, size * 5);
     Line(-13, size * 12, size * 8);
-    Line(26, size * 13, size/6);
+    Line(26, size * 13, size / 6);
     Line(-18, size * 13, size * 7);
     Line(-23, size * 14, size * 8);
     Line(-28, size * 15, size * 9);
@@ -53,7 +58,7 @@ export const Character: FC = (): ReactElement => {
     Line(-13, size * 18, size * 5);
     Line(-18, size * 19, size * 5.1);
     /* 꼬리쪽 */
-    Line(-43, size * 10, size /3);
+    Line(-43, size * 10, size / 3);
     Line(-43, size * 11, size * 1);
     Line(-43, size * 12, size * 2);
     Line(-43, size * 13, size * 5);
@@ -90,21 +95,42 @@ export const Character: FC = (): ReactElement => {
     }, 100);
   }
 
-  
   useEffect(() => {
     draw();
   }, [load]);
   /* 첨에 실행 */
 
   useEffect(() => {
-    setload(!load); 
+    setload(!load);
     // 캔버스 한번 리렌더링 해줘야됨
   }, []);
+  window.onkeypress = (e) => {
+    if (e.keyCode === 32) {
+      if(jumpBool){
+        return;
+      }
+      setJumpBool(true);
+      if (jumpHeight !== 15) {
+        return;
+      }
+      setJumpHeight(8);
+      setTimeout(()=>{
+        setJumpBool(false);
+      },800)
+      setTimeout(() => {
+        setJumpHeight(15);
+      }, 400);
+    }
+  };
   return (
     <>
       <canvas
         ref={canvas}
-        style={{ marginTop: "10%", marginLeft: "20%" }}
+        style={{
+          marginTop: `${jumpHeight}%`,
+          marginLeft: "20%",
+          transition: "0.4s",
+        }}
       />
     </>
   );
