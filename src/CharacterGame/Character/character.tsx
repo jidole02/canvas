@@ -36,9 +36,7 @@ export const Character: FC = (): ReactElement => {
   function BodyDraw() {
     const size = c.squerSize;
     if(c.ctx !== undefined) c.ctx.clearRect(0, 0, cv.width, cv.height);
-    for (let j = 3; j < 8; j++) {
-      Line(3, size * j, size * 8);
-    }
+    for (let j = 3; j < 8; j++) Line(3, size * j, size * 8);
     Line(10, size * 2, size * 5);
     Line(3, size * 8, size * 4);
     Line(3, size * 9, size * 6);
@@ -47,6 +45,13 @@ export const Character: FC = (): ReactElement => {
     Line(-8, size * 12, size * 5);
     Line(-13, size * 12, size * 8);
     Line(26, size * 13, size/6);
+    Line(-18, size * 13, size * 7);
+    Line(-23, size * 14, size * 8);
+    Line(-28, size * 15, size * 9);
+    Line(-23, size * 16, size * 7);
+    Line(-18, size * 17, size * 6);
+    Line(-13, size * 18, size * 5);
+    Line(-18, size * 19, size * 5.1);
     /* 꼬리쪽 */
     Line(-43, size * 10, size /3);
     Line(-43, size * 11, size * 1);
@@ -57,14 +62,6 @@ export const Character: FC = (): ReactElement => {
     Line(-33, size * 16, size * 4);
     Line(-28, size * 17, size * 4);
     Line(-23, size * 18, size * 4);
-    /*  */
-    Line(-18, size * 13, size * 7);
-    Line(-23, size * 14, size * 8);
-    Line(-28, size * 15, size * 9);
-    Line(-23, size * 16, size * 7);
-    Line(-18, size * 17, size * 6);
-    Line(-13, size * 18, size * 5);
-    Line(-18, size * 19, size * 5.1);
   }
 
   /* 다리 왔다리 갔다리 */
@@ -100,7 +97,8 @@ export const Character: FC = (): ReactElement => {
   /* 첨에 실행 */
 
   useEffect(() => {
-    setload(!load); // 캔버스 한번 리렌더링 해줘야됨
+    setload(!load); 
+    // 캔버스 한번 리렌더링 해줘야됨
   }, []);
   return (
     <>
