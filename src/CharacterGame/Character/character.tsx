@@ -7,7 +7,7 @@ export const Character: FC = (): ReactElement => {
     squerSize: number;
     margin: number;
     jumpBool: boolean;
-    y:number;
+    y: number;
     // 클래스 생성시 초기화
     constructor() {
       this.jumpBool = false;
@@ -44,7 +44,9 @@ export const Character: FC = (): ReactElement => {
   /* 몸통 그려주고 */
   function BodyDraw() {
     const size = c.squerSize;
-    if (c.ctx !== undefined) {c.ctx.clearRect(0, 0, cv.width, cv.height);}
+    if (c.ctx !== undefined) {
+      c.ctx.clearRect(0, 0, cv.width, cv.height);
+    }
     for (let j = 3; j < 8; j++) Line(3, size * j, size * 8);
     Line(size * 2, size * 2, size * 5);
     Line(size * 0.6, size * 8, size * 4);
@@ -74,7 +76,9 @@ export const Character: FC = (): ReactElement => {
   }
 
   /* 만약 장애물 왔는데 점프 안하고 있으면 */
-  if((obx.obx === 200) && !jumpBool) alert('게임오바') 
+  if (obx.obx === 240 && !jumpBool) {
+    alert("game over");
+  } /* alert('게임오바')  */
 
   /* 다리 왔다리 갔다리 */
   function draw(): void {
@@ -107,6 +111,7 @@ export const Character: FC = (): ReactElement => {
 
   useEffect(() => {
     draw();
+    localStorage.setItem("bool", "true");
   }, [load]);
   /* 첨에 실행 */
 
@@ -124,15 +129,15 @@ export const Character: FC = (): ReactElement => {
       setJumpBool(true);
       // 점프시 멈추게
       localStorage.setItem("bool", "true");
-      var interval = setInterval(()=>{
-        if(i < 41){
+      var interval = setInterval(() => {
+        if (i < 41) {
           c.y++;
-        }else{
+        } else {
           c.y--;
         }
         i++;
-        if(i > 80) clearInterval(interval)
-      },10)
+        if (i > 80) clearInterval(interval);
+      }, 10);
       if (jumpHeight !== 15) {
         return;
       }

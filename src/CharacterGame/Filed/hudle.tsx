@@ -27,7 +27,7 @@ export const Hudle: React.FC = (): ReactElement => {
   function Line(x: number, y: number, lim: number) {
     if (cv !== undefined) {
       for (let i = 0; i < lim; i++) {
-        f.ctx.fillRect(x + i, y, f.squerSize, f.squerSize);
+        f.ctx.fillRect(x + i + 40, y, f.squerSize, f.squerSize);
       }
     }
   }
@@ -48,8 +48,8 @@ export const Hudle: React.FC = (): ReactElement => {
         var a = setInterval(() => {
           /* 선인장 왼쪽 없에기 */
           x++;
-          setState({type:'OB_PLACE',obx:x});
-          f.ctx.clearRect(0,0,cv.width,cv.height);
+          setState({ type: "OB_PLACE", obx: x });
+          f.ctx.clearRect(0, 0, cv.width, cv.height);
           /* 선인장 왼쪽 가지 */
           Line(280 - x, f.squerSize * 2, 1);
           for (let j = 3; j < 18; j++) {
@@ -66,17 +66,18 @@ export const Hudle: React.FC = (): ReactElement => {
           Line(285 - x, f.squerSize * 10, 10);
           Line(290 - x, f.squerSize * 9, 8);
           Line(295 - x, f.squerSize * 8, 3);
-          if (x > 300) clearInterval(a);
+          if (x > 340) clearInterval(a);
         }, 3);
       }
     }
   }
 
   useEffect(() => {
-    RandOb(1);
-    setInterval(() => {
-      RandOb(1);
-    }, 1500); 
+    setTimeout(() => {
+      setInterval(() => {
+        RandOb(1);
+      }, 1500);
+    }, 100);
   }, [load]);
 
   useEffect(() => {

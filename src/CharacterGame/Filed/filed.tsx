@@ -29,9 +29,7 @@ const Filed: React.FC = (): ReactElement => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  useEffect(() => {
-      
-  }, [load]);
+  useEffect(() => {}, [load]);
 
   useEffect(() => {
     setLoad(!load);
