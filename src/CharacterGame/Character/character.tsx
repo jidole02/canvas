@@ -40,7 +40,7 @@ export const Character: FC = (): ReactElement => {
   /* 몸통 그려주고 */
   function BodyDraw() {
     const size = c.squerSize;
-    if (c.ctx !== undefined) c.ctx.clearRect(0, 0, cv.width, cv.height);
+    if (c.ctx !== undefined) {c.ctx.clearRect(0, 0, cv.width, cv.height);}
     for (let j = 3; j < 8; j++) Line(3, size * j, size * 8);
     Line(size * 2, size * 2, size * 5);
     Line(size * 0.6, size * 8, size * 4);

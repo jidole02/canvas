@@ -15,7 +15,7 @@ export const Hudle: React.FC = (): ReactElement => {
   const [load, setLoad] = useState<boolean>(false);
   if (cv !== undefined) {
     f.ctx = cv.getContext("2d");
-    f.ctx.fillStyle = "gray";
+    f.ctx.fillStyle = "black";
   }
 
   function rand(min: number, max: number) {
@@ -33,7 +33,7 @@ export const Hudle: React.FC = (): ReactElement => {
   function ClearLine(x: number, y: number, lim: number) {
     if (cv !== undefined) {
       for (let i = 0; i < lim; i++) {
-        f.ctx.clearRect(x + i, y, f.squerSize, f.squerSize);
+        f.ctx.clearRect(x + i + 1, y, f.squerSize, f.squerSize);
       }
     }
   }
@@ -41,29 +41,28 @@ export const Hudle: React.FC = (): ReactElement => {
   function RandOb(ran: number) {
     let x = 0;
     if (cv !== undefined) {
-        /* 첫번째 랜덤 선인장 */
+      /* 첫번째 랜덤 선인장 */
       if (ran === 1) {
         var a = setInterval(() => {
-          /* x++; */
- /*          for (let j = 0; j < 12; j++) {
-            ClearLine(281 - x, f.squerSize * j, 10);
-          } */
-          Line(280 - x, f.squerSize * 1, 1);
-          for(let j =2;j<15;j++){
-            Line(275 - x, f.squerSize * j, 10);
+          /* 선인장 왼쪽 없에기 */
+          x++;
+          f.ctx.clearRect(0,0,cv.width,cv.height);
+          /* 선인장 왼쪽 가지 */
+          Line(280 - x, f.squerSize * 2, 1);
+          for (let j = 3; j < 18; j++) {
+            Line(275 - x, f.squerSize * j, 8);
           }
-          if (x > 300) clearInterval(a);
-        }, 3);
-      }
-      if (ran === 2) {
-        var a = setInterval(() => {
-          /* x++; */
-          for (let j = 5; j < 12; j++) {
-            ClearLine(201 - x, f.squerSize * j, 10);
-          }
-          for (let j = 5; j < 12; j++) {
-            Line(200 - x, f.squerSize * j, 10);
-          }
+          Line(260 - x, f.squerSize * 7, 1);
+          Line(260 - x, f.squerSize * 8, 6);
+          Line(260 - x, f.squerSize * 9, 6);
+          Line(260 - x, f.squerSize * 10, 6);
+          Line(260 - x, f.squerSize * 11, 10);
+          Line(265 - x, f.squerSize * 11, 10);
+          Line(265 - x, f.squerSize * 12, 10);
+          Line(285 - x, f.squerSize * 11, 7);
+          Line(285 - x, f.squerSize * 10, 10);
+          Line(290 - x, f.squerSize * 9, 8);
+          Line(295 - x, f.squerSize * 8, 3);
           if (x > 300) clearInterval(a);
         }, 3);
       }
@@ -71,10 +70,10 @@ export const Hudle: React.FC = (): ReactElement => {
   }
 
   useEffect(() => {
-      RandOb(1)
-/*     setInterval(() => {
+    RandOb(1);
+    setInterval(() => {
       RandOb(1);
-    }, 2000); */
+    }, 1500); 
   }, [load]);
 
   useEffect(() => {
@@ -89,7 +88,7 @@ export const Hudle: React.FC = (): ReactElement => {
           marginLeft: "22%",
         }}
       >
-        <canvas ref={canvas}/>
+        <canvas ref={canvas} />
       </s.Container>
     </>
   );
