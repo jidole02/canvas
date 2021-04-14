@@ -1,9 +1,10 @@
-import { Character } from "./CharacterGame/index";
+import { Character,Hudle } from "./CharacterGame/index";
 
 function App() {
   return (
     <>
-      <Character />
+    <Hudle />
+    <Character/>
     </>
   );
 }
