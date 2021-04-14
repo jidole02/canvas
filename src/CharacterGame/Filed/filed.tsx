@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import * as s from "./styles";
 
 const Filed: React.FC = (): ReactElement => {

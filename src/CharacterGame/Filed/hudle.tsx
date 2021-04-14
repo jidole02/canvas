@@ -1,4 +1,5 @@
 import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
+import { SetState } from "../context";
 import * as s from "./styles";
 
 export const Hudle: React.FC = (): ReactElement => {
@@ -10,6 +11,7 @@ export const Hudle: React.FC = (): ReactElement => {
     }
   }
   const f = new Filed();
+  const setState = SetState();
   const canvas = useRef();
   const cv: HTMLCanvasElement = canvas.current;
   const [load, setLoad] = useState<boolean>(false);
@@ -46,6 +48,7 @@ export const Hudle: React.FC = (): ReactElement => {
         var a = setInterval(() => {
           /* 선인장 왼쪽 없에기 */
           x++;
+          setState({type:'OB_PLACE',obx:x});
           f.ctx.clearRect(0,0,cv.width,cv.height);
           /* 선인장 왼쪽 가지 */
           Line(280 - x, f.squerSize * 2, 1);

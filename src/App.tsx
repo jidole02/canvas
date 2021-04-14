@@ -1,11 +1,12 @@
-import { Character,Hudle } from "./CharacterGame/index";
+import { SampleProvider } from "./CharacterGame/context";
+import { Character, Hudle } from "./CharacterGame/index";
 
 function App() {
   return (
-    <>
-    <Hudle />
-    <Character/>
-    </>
+    <SampleProvider>
+      <Hudle />
+      <Character />
+    </SampleProvider>
   );
 }
 

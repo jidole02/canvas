@@ -1,4 +1,5 @@
 import { FC, ReactElement, useEffect, useRef, useState } from "react";
+import { GetState } from "../context";
 
 export const Character: FC = (): ReactElement => {
   class Character {
@@ -6,11 +7,13 @@ export const Character: FC = (): ReactElement => {
     squerSize: number;
     margin: number;
     jumpBool: boolean;
+    y:number;
     // 클래스 생성시 초기화
     constructor() {
       this.jumpBool = false;
       this.squerSize = 3;
       this.margin = 30;
+      this.y = 0;
     }
   }
   const c = new Character();
@@ -19,6 +22,7 @@ export const Character: FC = (): ReactElement => {
   const [load, setload] = useState<boolean>(false);
   const [jumpHeight, setJumpHeight] = useState<number>(15);
   const [jumpBool, setJumpBool] = useState<boolean>(false);
+  const obx = GetState();
 
   /* 라인 그리기 */
   function Line(x: number, y: number, cnt: number) {
@@ -69,6 +73,9 @@ export const Character: FC = (): ReactElement => {
     Line(-size * 4.6, size * 18, size * 4);
   }
 
+  /* 만약 장애물 왔는데 점프 안하고 있으면 */
+  if((obx.obx === 200) && !jumpBool) alert('게임오바') 
+
   /* 다리 왔다리 갔다리 */
   function draw(): void {
     const size = c.squerSize;
@@ -107,7 +114,9 @@ export const Character: FC = (): ReactElement => {
     setload(!load);
     // 캔버스 한번 리렌더링 해줘야됨
   }, []);
+  /* 점프 이벤트 */
   window.onkeypress = (e) => {
+    let i = 0;
     if (e.keyCode === 32) {
       if (jumpBool) {
         return;
@@ -115,6 +124,15 @@ export const Character: FC = (): ReactElement => {
       setJumpBool(true);
       // 점프시 멈추게
       localStorage.setItem("bool", "true");
+      var interval = setInterval(()=>{
+        if(i < 41){
+          c.y++;
+        }else{
+          c.y--;
+        }
+        i++;
+        if(i > 80) clearInterval(interval)
+      },10)
       if (jumpHeight !== 15) {
         return;
       }
