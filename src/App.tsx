@@ -1,19 +1,11 @@
-import { SampleProvider } from "./CharacterGame/context";
-import { Character, Hudle } from "./CharacterGame/index";
-import { useState } from "react";
-
+import CharterGameResult from './CharacterGame/result'
+import { PxInformatino } from './PX'
+ 
 function App() {
-  const [load, setLoad] = useState<boolean>(false);
-  window.onkeydown = function (e) {
-    if (e.keyCode === 32) {
-      setLoad(true);
-    }
-  };
   return (
-    <SampleProvider>
-      {load && <Hudle />}
-      <Character />
-    </SampleProvider>
+    <>
+    <PxInformatino/>
+    </>
   );
 }
 
