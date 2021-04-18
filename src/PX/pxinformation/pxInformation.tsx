@@ -11,6 +11,7 @@ export const PxInformatino: FC = (): ReactElement => {
   const inp = document.getElementById("inp");
   const [load, setLoad] = useState<boolean>(false);
   const [src, setSrc] = useState<any>(null);
+  const timer = (ms) => new Promise((res) => setTimeout(res, ms));
   img.src = src;
   if (cv !== undefined) {
     p.ctx = cv.getContext("2d");
@@ -34,13 +35,14 @@ export const PxInformatino: FC = (): ReactElement => {
   /* 이미지 가로 세로 구하고, px로 변환 */
   const h: number = img.height;
   const w: number = img.width;
-  function draw() {
+  async function draw() {
     /* 여기 300으로 해야 꽉참 */
     p.ctx?.drawImage(img, 0, 0, 300, (300 * h) / w);
     for (let i = 0; i < p.MAX_SIZE; i++) {
       for (let j = 0; j < p.MAX_SIZE; j++) {
         /* 조금씩 색상 추출해오는 느낌 */
         if (i % p.PX_SIZE === 0 && j % p.PX_SIZE === 0) {
+          await timer(5);
           var pixel = p.ctx?.getImageData(i, j, 1, 1);
           if (pixel) {
             const data = pixel.data;
@@ -69,10 +71,37 @@ export const PxInformatino: FC = (): ReactElement => {
     }
   }
   return (
-    <>
-      <canvas ref={canvas} style={{display:"none"}}></canvas>
-      <canvas ref={drawCanvas} style={{ width: "30%" }}></canvas>
-      <input type="file" id="inp" />
-    </>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
+      <canvas ref={canvas} style={{ display: "none" }}></canvas>
+      <canvas
+        ref={drawCanvas}
+        style={{ width: "30%", marginBottom: "5%" }}
+      ></canvas>
+      <button
+        onClick={() => {
+          inp.click();
+        }}
+        style={{
+          width: "150px",
+          height: "40px",
+          borderRadius: "24px",
+          border: "2px solid black",
+          backgroundColor: "white",
+          color: "black",
+          cursor: "pointer",
+        }}
+      >
+        사진 선택
+      </button>
+      <input type="file" id="inp" style={{ display: "none" }} />
+    </div>
   );
 };

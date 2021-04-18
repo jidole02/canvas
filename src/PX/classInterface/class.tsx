@@ -9,6 +9,6 @@ export class PxClass{
     constructor(){
         this.drawState = 0;
         this.MAX_SIZE = 500;
-        this.PX_SIZE = 8;
+        this.PX_SIZE = 15;
     }
 }
