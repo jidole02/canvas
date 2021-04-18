@@ -35,7 +35,6 @@ export const PxInformatino: FC = (): ReactElement => {
   const h: number = img.height;
   const w: number = img.width;
   function draw() {
-    console.log("sdfsdf");
     /* 여기 300으로 해야 꽉참 */
     p.ctx?.drawImage(img, 0, 0, 300, (300 * h) / w);
     for (let i = 0; i < p.MAX_SIZE; i++) {
@@ -57,7 +56,6 @@ export const PxInformatino: FC = (): ReactElement => {
   /* 이미지 업로드 해서 src 가져오는 곳 */
   if (inp) {
     inp.onchange = function () {
-      console.log(this);
       getSrc(this);
     };
   }
