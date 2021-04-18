@@ -1,6 +1,5 @@
 import { FC, ReactElement, useRef, useState, useEffect } from "react";
 import { PxClass } from "../classInterface/class";
-import Img from "../../Assets/pxImg.jpg";
 
 export const PxInformatino: FC = (): ReactElement => {
   const canvas = useRef();
@@ -9,16 +8,20 @@ export const PxInformatino: FC = (): ReactElement => {
   const cv: HTMLCanvasElement = canvas.current;
   const cv2: HTMLCanvasElement = drawCanvas.current;
   const p = new PxClass();
-  const inp = document.getElementById('inp');
+  const inp = document.getElementById("inp");
   const [load, setLoad] = useState<boolean>(false);
+  const [src, setSrc] = useState<any>(null);
+  img.src = src;
   if (cv !== undefined) {
     p.ctx = cv.getContext("2d");
     p.dctx = cv2.getContext("2d");
   }
   /* 로드되면 */
   useEffect(() => {
-    draw();
-  }, [load, img]);
+    if (src !== null) {
+      draw();
+    }
+  }, [load, src]);
   /* 스테이트 변환으로 로드 */
   useEffect(() => {
     let i = 0;
@@ -27,11 +30,12 @@ export const PxInformatino: FC = (): ReactElement => {
       i++;
       if (i > 3) clearInterval(interval);
     }, 100);
-  }, []);
+  }, [src]);
   /* 이미지 가로 세로 구하고, px로 변환 */
   const h: number = img.height;
   const w: number = img.width;
   function draw() {
+    console.log("sdfsdf");
     /* 여기 300으로 해야 꽉참 */
     p.ctx?.drawImage(img, 0, 0, 300, (300 * h) / w);
     for (let i = 0; i < p.MAX_SIZE; i++) {
@@ -51,25 +55,25 @@ export const PxInformatino: FC = (): ReactElement => {
     }
   }
   /* 이미지 업로드 해서 src 가져오는 곳 */
-  if(inp){
-    inp.onchange = function() {
-        console.log(this);
-        getSrc(this);
-    }
+  if (inp) {
+    inp.onchange = function () {
+      console.log(this);
+      getSrc(this);
+    };
   }
-  function getSrc(input:any) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            
-        }
-        reader.readAsDataURL(input.files[0]);
-     }
+  function getSrc(input: any) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        setSrc(e.target.result); //
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
   }
   return (
     <>
-      <canvas ref={canvas}></canvas>
-      <canvas ref={drawCanvas}></canvas>
+      <canvas ref={canvas} style={{display:"none"}}></canvas>
+      <canvas ref={drawCanvas} style={{ width: "30%" }}></canvas>
       <input type="file" id="inp" />
     </>
   );
