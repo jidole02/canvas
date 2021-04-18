@@ -26,17 +26,19 @@ export const PxInformatino: FC = (): ReactElement => {
       if (i > 3) clearInterval(interval);
     }, 100);
   }, []);
+  const h: number = img.height;
+  const w: number = img.width;
   function draw() {
-    p.ctx?.drawImage(img, 0, 0);
+    p.ctx?.drawImage(img, 0, 0, 300, (300 * h) / w);
     for (let i = 0; i < p.MAX_SIZE; i++) {
       for (let j = 0; j < p.MAX_SIZE; j++) {
-          /* 조금씩 색상 추출해오는 느낌 */
+        /* 조금씩 색상 추출해오는 느낌 */
         if (i % p.PX_SIZE === 0 && j % p.PX_SIZE === 0) {
           var pixel = p.ctx?.getImageData(i, j, 1, 1);
           if (pixel) {
             const data = pixel.data;
             if (data) {
-              p.dctx.fillStyle = `rgb(${data[0]},${data[1]},${data[2]})`
+              p.dctx.fillStyle = `rgb(${data[0]},${data[1]},${data[2]})`;
               p.dctx.fillRect(i, j, p.PX_SIZE, p.PX_SIZE);
             }
           }
@@ -46,7 +48,7 @@ export const PxInformatino: FC = (): ReactElement => {
   }
   return (
     <>
-      <canvas ref={canvas} style={{ width: "500px" }}></canvas>
+      <canvas ref={canvas}></canvas>
       <canvas ref={drawCanvas}></canvas>
     </>
   );

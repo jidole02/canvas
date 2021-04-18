@@ -8,7 +8,7 @@ export class PxClass{
     PX_SIZE:number;
     constructor(){
         this.drawState = 0;
-        this.MAX_SIZE = 1000;
-        this.PX_SIZE = 20;
+        this.MAX_SIZE = 500;
+        this.PX_SIZE = 12;
     }
 }
