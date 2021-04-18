@@ -7,7 +7,7 @@ export const PxInformatino: FC = (): ReactElement => {
   const drawCanvas = useRef();
   const img: CanvasImageSource = new Image();
   const cv: HTMLCanvasElement = canvas.current;
-  const cv2:HTMLCanvasElement = drawCanvas.current;
+  const cv2: HTMLCanvasElement = drawCanvas.current;
   const p = new PxClass();
   const [load, setLoad] = useState<boolean>(false);
   img.src = Img;
@@ -28,20 +28,20 @@ export const PxInformatino: FC = (): ReactElement => {
   }, []);
   function draw() {
     p.ctx?.drawImage(img, 0, 0);
-    const imgData = p.ctx?.getImageData(0, 0, cv.width, cv.height);
-    if (imgData) {
-      const data = imgData.data;
-    }
-    for(let i =0;i<255;i++){
-        for(let j=0;j<255;j++){
-            var pixel = p.ctx?.getImageData(i,j,1,1);
-            if(pixel){
-                const data = pixel?.data;
-/*                 console.log(data[0],data[1],data[2]) */
-                p.dctx.fillStyle = `rgb(${data[0]},${data[1]},${data[2]})`
-                p.dctx.fillRect(i,j,1,1);
+    for (let i = 0; i < p.MAX_SIZE; i++) {
+      for (let j = 0; j < p.MAX_SIZE; j++) {
+          /* 조금씩 색상 추출해오는 느낌 */
+        if (i % p.PX_SIZE === 0 && j % p.PX_SIZE === 0) {
+          var pixel = p.ctx?.getImageData(i, j, 1, 1);
+          if (pixel) {
+            const data = pixel.data;
+            if (data) {
+              p.dctx.fillStyle = `rgb(${data[0]},${data[1]},${data[2]})`
+              p.dctx.fillRect(i, j, p.PX_SIZE, p.PX_SIZE);
             }
+          }
         }
+      }
     }
   }
   return (
