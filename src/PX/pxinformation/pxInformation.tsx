@@ -42,7 +42,7 @@ export const PxInformatino: FC = (): ReactElement => {
       for (let j = 0; j < p.MAX_SIZE; j++) {
         /* 조금씩 색상 추출해오는 느낌 */
         if (i % p.PX_SIZE === 0 && j % p.PX_SIZE === 0) {
-          await timer(5);
+            if(p.PX_SIZE >= 10) await timer(2);
           var pixel = p.ctx?.getImageData(i, j, 1, 1);
           if (pixel) {
             const data = pixel.data;
